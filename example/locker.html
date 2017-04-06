@@ -76,7 +76,7 @@
     <div id="handlock"></div>
     <div id="toast" class="hide">请连接至少4个点</div>
     <div id="selectMode">
-      <label><input name="mode" type="radio" value="check" checked="checked"/>验证密码</label>
+      <label><input id="checkmode" name="mode" type="radio" value="check" checked="checked"/>验证密码</label>
       <label><input name="mode" type="radio" value="update"/>设置密码</label>
     </div>
   </div>
@@ -88,6 +88,7 @@
       container: document.querySelector('#handlock'),
       check: {
         checked: function(res){
+          locker.clearPath();
           if(res.err){
             if(res.err.message === HandLock.Locker.ERR_PASSWORD_MISMATCH){
               hint.innerHTML = '密码错误，请重新绘制！';
@@ -104,6 +105,7 @@
       },
       update:{
         beforeRepeat: function(res){
+          locker.clearPath();
           if(res.err){
             toast.className = 'show';
             setTimeout(function(){
@@ -114,6 +116,7 @@
           }
         },
         afterRepeat: function(res){
+          locker.clearPath();
           if(res.err){
             if(res.err.message === HandLock.Locker.ERR_PASSWORD_MISMATCH){
               hint.innerHTML = '两次绘制的图形不一致，请重新绘制！';
@@ -127,6 +130,7 @@
             hint.innerHTML = '密码更新成功！';
             password = res.records;
             localStorage.setItem('handlock_passwd', password);
+            checkmode.click();
           }
         },
       }
