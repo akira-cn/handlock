@@ -1,128 +1,67 @@
-# 手势密码设置和解锁的实现
+# 2017 前端星计划选拔作业
 
-这是[第三届360前端星计划](http://html5.360.cn/star)的[在线作业](doc/handlock.md)的参考实现。
+在移动端设备上，“手势密码”成为一个很常用的 UI 组件。
 
-## 在线例子
+一个手势密码的界面大致如下：
 
-[在线示例](http://handlock.test.h5jun.com/example/locker.html)
+![](https://p1.ssl.qhimg.com/t01d73f4b567014b497.png)
 
-![扫描二维码](http://p5.qhimg.com/t0183f30bf0e1670466.png)
+用户用手指按顺序依次划过 9 个原点中的若干个（必须不少于 4 个点），如果划过的点的数量和顺序与之前用户设置的相同，那么当用户的手指离开屏幕时，判定为密码输入正确，否则密码错误。
 
-## 安装和使用
+要求：实现一个移动网页，允许用户设置手势密码和验证手势密码。已设置的密码记录在本地 localStorage 中。
 
-直接在浏览器里引用:
+界面原型和操作流程如下：
 
-```html
-<script src="https://s3.ssl.qhres.com/!466d0e4e/HandLock-0.2.0.min.js"></script>
-```
+### stat 1：设置密码
 
-## API
+![](https://p5.ssl.qhimg.com/t01ad2dbd1fa3195d55.png)
 
-### Locker
+用户选择设置密码，提示用户输入手势密码
 
-创建一个可以设置密码和验证密码的实例
+### stat 2：密码长度太短
 
-```js
-var password = '11121323';
+![](https://p3.ssl.qhimg.com/t01e3ccb14544b73cc3.png)
 
-var locker = new HandLock.Locker({
-  container: document.querySelector('#handlock'),
-  check: {
-    checked: function(res){
-      if(res.err){
-        console.error(res.err); //密码错误或长度太短
-      }else{
-        console.log(`正确，密码是：${res.records}`);
-      }
-    },
-  },
-  update:{
-    beforeRepeat: function(res){
-      if(res.err){
-        console.error(res.err); //密码长度太短
-      }else{
-        console.log(`密码初次输入完成，等待重复输入`);
-      }
-    },
-    afterRepeat: function(res){
-      if(res.err){
-        console.error(res.err); //密码长度太短或者两次密码输入不一致
-      }else{
-        console.log(`密码更新完成，新密码是：${res.records}`);
-      }
-    },
-  }
-});
+如果不足 5 个点，提示用户密码太短
 
-locker.check(password);
-```
+### stat 3：再次输入密码
 
-### 几种 err 状态
+![](https://p4.ssl.qhimg.com/t01e29ee99bbe73b256.png)
 
-- ERR_NOT_ENOUGH_POINTS 绘制的点数量不足，默认为最少4个点
-- ERR_PASSWORD_MISMATCH 密码不一致，check时密码不对或者update时两次输入密码不一致
-- ERR_USER_CANCELED     用户切换验证或设置操作时，取消当前的状态
+提示用户再次输入密码
 
-### 可配置的参数
+### stat 4: 两次密码输入不一致
 
-```js
-//recorder.js
-const defaultOptions = {
-  container: null, //创建canvas的容器，如果不填，自动在 body 上创建覆盖全屏的层
-  focusColor: '#e06555',  //当前选中的圆的颜色
-  fgColor: '#d6dae5',     //未选中的圆的颜色
-  bgColor: '#fff',        //canvas背景颜色
-  n: 3, //圆点的数量： n x n
-  innerRadius: 10,  //圆点的内半径
-  outerRadius: 25,  //圆点的外半径，focus 的时候显示
-  touchRadius: 35,  //判定touch事件的圆半径
-  render: true,     //自动渲染
-  customStyle: false, //自定义样式
-  minPoints: 4,     //最小允许的点数
-};
-```
+![](https://p4.ssl.qhimg.com/t01698b3be9b0d473e7.png)
 
-```js
-//locker.js
-const defaultOptions = {
-  update: {
-    beforeRepeat: function(){}, //更新密码第一次输入后的事件
-    afterRepeat: function(){}   //更新密码重复输入后的事件
-  },
-  check: {
-    checked: function(){} //校验密码之后的事件
-  }
-}
-```
+如果用户输入的两次密码不一致，**提示并重置，重新开始设置密码**
 
-### reset()
+### stat 5: 密码设置成功
 
-清除 canvas 上选中的圆。
+![](https://p3.ssl.qhimg.com/t01dc54ccf4133d2b06.png)
 
-### cancel()
+如果两次输入一致，**密码设置成功，更新 localStorage**
 
-取消当前状态，用于update/check状态切换。
+### stat 6: 验证密码 - 不正确
 
-## 修改和发布代码
+![](https://p1.ssl.qhimg.com/t01410791e9c637add0.png)
 
-下载仓库并安装依赖：
+切换单选框进入验证密码模式，将用户输入的密码与保存的密码相比较，如果不一致，则提示**输入密码不正确，重置为等待用户输入**。
 
-```bash
-npm install
-```
+### stat 7: 验证密码 - 正确
 
-启动服务：
+![](https://p0.ssl.qhimg.com/t019bf08a6f82f1d289.png)
 
-```bash
-npm start
-```
+如果用户输入的密码与 localStorage 中保存的密码一致，则提示**密码正确**。
 
-发布代码：
+---
 
-```bash
-npm run deploy
-```
+请同学们按照上面的需求实现这个网页，在手机上可用。可以不用太考虑古老机器的兼容性，最新的 android 和 iPhone 可用即可。
 
-## License
+**要求：** 
 
-MIT
+1. 独立思考，独立完成，严禁抄袭！如果发现抄袭导致代码雷同，抄袭者和被抄袭者将都不会入选，而且会取消以后参加 360 面试的资格。
+
+1. 注意保持良好代码风格和注释，可以在 README 文档里写上自己的思路。
+
+1. 请在截止日期内完成并提交。 

@@ -1,6 +1,6 @@
 # 手势密码设置和解锁的实现
 
-这是[第三届360前端星计划](http://html5.360.cn/star)的[在线作业](https://www.h5jun.com/post/75team-star-handlock.html)的参考实现。
+这是[第三届360前端星计划](http://html5.360.cn/star)的[在线作业](doc/handlock.md)的参考实现。
 
 ## 在线例子
 
