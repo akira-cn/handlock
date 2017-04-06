@@ -11,7 +11,7 @@
 直接在浏览器里引用:
 
 ```html
-<script src="https://s3.ssl.qhres.com/!ad56eb6f/HandLock-0.2.0.min.js"></script>
+<script src="https://s3.ssl.qhres.com/!466d0e4e/HandLock-0.2.0.min.js"></script>
 ```
 
 ## API
