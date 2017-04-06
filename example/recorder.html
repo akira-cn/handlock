@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Demo</title>
+  <style type="text/css">
+    * { 
+      padding: 0;
+      margin: 0; 
+    }
+    html, body { 
+      width: 100%; 
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #main{
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .control {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="main"></div>
+  <div class="control">
+    <button id="cancelBtn">cancel</button>
+    <button id="recordBtn">record</button>
+  </div>
+  <script src="/js/HandLock.js"></script>
+  <script>
+    var recorder = new HandLock.Recorder({
+      container: document.querySelector('#main')
+    });
+
+    recorder.record().then(function recorded(res){
+      if(res.err){
+        console.error(res.err);
+        recorder.reset();
+        recorder.record().then(recorded);
+      }else{
+        console.log(res.records);
+        recorder.record().then(recorded);
+      }      
+    });
+
+    cancelBtn.onclick = function(){
+      recorder.cancel();
+      recorder.reset();
+    }
+
+    recordBtn.onclick = function(){
+      console.log('record enabled');
+      recorder.record();
+    }
+  </script>
+</body>
+</html>

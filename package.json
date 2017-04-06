@@ -1,6 +1,6 @@
 {
   "name": "hand-lock",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --quiet & http-server example -c-1 -p 8081",
-    "deploy": "rm -rf dist/* && webpack --env.production"
+    "deploy": "rm -rf dist/* && ./script/deploy.js"
   },
   "keywords": [],
   "author": "",
