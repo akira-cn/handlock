@@ -6,7 +6,7 @@
 
 [在线示例](http://handlock.test.h5jun.com/example/locker.html)
 
-![扫描二维码](http://p5.qhimg.com/t0183f30bf0e1670466.png)
+![扫描二维码](https://p.ssl.qhimg.com/t0183f30bf0e1670466.png)
 
 ## 安装和使用
 
