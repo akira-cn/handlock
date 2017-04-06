@@ -135,11 +135,11 @@
     selectMode.addEventListener('change', function(e){
       var value = e.target.value;
       if(value === 'update'){
-        locker.reset();
+        locker.clearPath();
         hint.innerHTML = '设置密码，请绘制密码图案';
         locker.update();
       }else if(value === 'check'){
-        locker.reset();
+        locker.clearPath();
         hint.innerHTML = '验证密码，请绘制密码图案';
         locker.check(password);
       }

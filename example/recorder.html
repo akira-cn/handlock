@@ -42,25 +42,29 @@
       container: document.querySelector('#main')
     });
 
-    recorder.record().then(function recorded(res){
+    function recorded(res){
       if(res.err){
         console.error(res.err);
-        recorder.reset();
-        recorder.record().then(recorded);
+        recorder.clearPath();
+        if(res.err.message !== HandLock.Recorder.ERR_USER_CANCELED){
+          recorder.record().then(recorded);
+        }
       }else{
         console.log(res.records);
         recorder.record().then(recorded);
       }      
-    });
+    }
+    
+    recorder.record().then(recorded);
 
     cancelBtn.onclick = function(){
       recorder.cancel();
-      recorder.reset();
+      recorder.clearPath();
     }
 
     recordBtn.onclick = function(){
       console.log('record enabled');
-      recorder.record();
+      recorder.record().then(recorded);
     }
   </script>
 </body>

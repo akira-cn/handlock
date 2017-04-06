@@ -13,7 +13,7 @@
 直接在浏览器里引用:
 
 ```html
-<script src="https://s3.ssl.qhres.com/!466d0e4e/HandLock-0.2.0.min.js"></script>
+<script src="https://s2.ssl.qhres.com/!8c9079e6/HandLock-0.2.0.min.js"></script>
 ```
 
 ## API
@@ -95,7 +95,7 @@ const defaultOptions = {
 }
 ```
 
-### reset()
+### clearPath()
 
 清除 canvas 上选中的圆。
 
