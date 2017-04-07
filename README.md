@@ -13,7 +13,7 @@
 直接在浏览器里引用:
 
 ```html
-<script src="https://s5.ssl.qhres.com/!28f28b38/HandLock-0.2.0.min.js"></script>
+<script src="https://s2.ssl.qhres.com/!9f2db498/HandLock-0.2.1.min.js"></script>
 ```
 
 ## API
